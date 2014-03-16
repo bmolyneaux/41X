@@ -2,6 +2,8 @@
 using VrPlayer.Helpers.Mvvm;
 using VrPlayer.Models.Config;
 using VrPlayer.Models.State;
+using VrPlayer.Views.VrGui;
+using System.Windows.Media.Media3D;
 
 namespace VrPlayer.ViewModels
 {
@@ -19,6 +21,12 @@ namespace VrPlayer.ViewModels
             get { return _config; }
         }
 
+        private readonly VrGui _gui;
+        public VrGui Gui
+        {
+            get { return _gui; }
+        }
+
         #region Commands
 
         private readonly ICommand _toggleNavigationCommand;
@@ -33,6 +41,7 @@ namespace VrPlayer.ViewModels
         {
             _state = state;
             _config = config;
+            _gui = new VrGui();
 
             //Commands
             _toggleNavigationCommand = new RelayCommand(ToggleNavigation);

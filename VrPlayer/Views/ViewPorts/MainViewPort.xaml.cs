@@ -6,6 +6,7 @@ using System.Windows.Media.Media3D;
 using VrPlayer.Helpers;
 using VrPlayer.Models.State;
 using VrPlayer.ViewModels;
+using System.Windows.Input;
 using Application = System.Windows.Application;
 
 namespace VrPlayer.Views.ViewPorts
@@ -28,6 +29,8 @@ namespace VrPlayer.Views.ViewPorts
                 _externalViewPort.Closing += ExternalViewPortOnClosing;
                 _viewModel.State.PropertyChanged += StateOnPropertyChanged;
                 _viewModel.State.StereoOutput = _viewModel.State.StereoOutput;
+
+                Cursor = System.Windows.Input.Cursors.None;
             }
             catch (Exception exc)
             {
@@ -38,6 +41,11 @@ namespace VrPlayer.Views.ViewPorts
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _viewModel.ToggleNavigationCommand.Execute(null);
+        }
+
+        private void Border_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            _viewModel.Gui.MouseXY = e.GetPosition(this);
         }
 
         private void ExternalViewPortOnClosing(object sender, CancelEventArgs cancelEventArgs)
