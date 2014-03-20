@@ -257,6 +257,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Medias\VrGui\image_icon.png" />
+    <Resource Include="Medias\VrGui\live_icon.png" />
+    <Resource Include="Medias\VrGui\next_icon.png" />
+    <Resource Include="Medias\VrGui\prev_icon.png" />
+    <Resource Include="Medias\VrGui\video_icon.png" />
     <Content Include="Samples\2-CubeMono.jpg.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
