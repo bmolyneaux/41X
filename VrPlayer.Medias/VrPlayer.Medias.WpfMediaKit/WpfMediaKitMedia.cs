@@ -22,6 +22,11 @@ namespace VrPlayer.Medias.WpfMediaKit
             get { return _player; }
         }
 
+        public override FrameworkElement Media2
+        {
+            get { return _player; }
+        }
+
         public static readonly DependencyProperty PositionalAudioProperty =
             DependencyProperty.Register("PositionalAudio", typeof(bool),
             typeof(WpfMediaKitMedia), new FrameworkPropertyMetadata(false));

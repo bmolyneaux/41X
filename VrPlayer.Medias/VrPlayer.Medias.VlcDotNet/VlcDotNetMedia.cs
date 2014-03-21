@@ -26,6 +26,11 @@ namespace VrPlayer.Medias.VlcDotNet
             get { return _media; }
         }
 
+        public override FrameworkElement Media2
+        {
+            get { return _media; }
+        }
+
         public static readonly DependencyProperty DebugModeProperty =
             DependencyProperty.Register("DebugMode", typeof(bool),
             typeof(VlcDotNetMedia), new FrameworkPropertyMetadata(false));

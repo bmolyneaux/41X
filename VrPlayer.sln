@@ -117,6 +117,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VrPlayer.Effects.Shazzam", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VrPlayer.Projections.Hemisphere", "VrPlayer.Projections\VrPlayer.Projections.Hemisphere\VrPlayer.Projections.Hemisphere.csproj", "{83765706-6CD2-4716-B3E8-09EBE91D3FA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VrPlayer.Medias.VlcDotNetDual", "VrPlayer.Medias\VrPlayer.Medias.VlcDotNetDual\VrPlayer.Medias.VlcDotNetDual.csproj", "{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +541,16 @@ Global
 		{83765706-6CD2-4716-B3E8-09EBE91D3FA9}.Release|Mixed Platforms.Build.0 = Release|x86
 		{83765706-6CD2-4716-B3E8-09EBE91D3FA9}.Release|x86.ActiveCfg = Release|x86
 		{83765706-6CD2-4716-B3E8-09EBE91D3FA9}.Release|x86.Build.0 = Release|x86
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -580,5 +592,6 @@ Global
 		{525C5AF8-654B-417E-8FBF-D872D2D74466} = {C7945F11-9445-4EF4-8F1D-7DE753B63280}
 		{FEBB253E-A5E0-42D4-905D-24F2B2AEEEE5} = {C7945F11-9445-4EF4-8F1D-7DE753B63280}
 		{F6AAE40A-529D-4E1C-9D0B-A20B921CCB93} = {C7945F11-9445-4EF4-8F1D-7DE753B63280}
+		{4C65491B-65D7-4D1E-A813-0869D6F1D7E2} = {C7945F11-9445-4EF4-8F1D-7DE753B63280}
 	EndGlobalSection
 EndGlobal

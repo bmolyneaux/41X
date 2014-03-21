@@ -28,6 +28,11 @@ namespace VrPlayer.Medias.Gdi
             }
         }
 
+        public override FrameworkElement Media2
+        {
+            get { return _media; }
+        }
+
         public static readonly DependencyProperty ProcessProperty =
             DependencyProperty.Register("Process", typeof(Process),
             typeof(GdiMedia), new FrameworkPropertyMetadata(null));
