@@ -358,8 +358,8 @@ namespace VrPlayer.Projections.Hemisphere
                     for (int slice = 0; slice <= Slices; slice++)
                     {
                         var p = new Point((double)slice / Slices, (double)stack / Stacks);
-                        var u = XLeft / 180.0 + 0.25 + fisheyeScaleHorizontal * (p.Y / 4) * Math.Cos(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollLeft / 360);
-                        var v = YLeft / 180.0 + 0.5 + fisheyeScaleVertical * (p.Y / 2) * Math.Sin(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollLeft / 360);
+                        var u = XLeft / 360.0 + 0.25 + fisheyeScaleHorizontal * (p.Y / 4) * Math.Cos(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollLeft / 360);
+                        var v = YLeft / 360.0 + 0.5 + fisheyeScaleVertical * (p.Y / 2) * Math.Sin(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollLeft / 360);
                         textureCoordinates.Add(new Point(u, v));
                     }
                 }
@@ -370,8 +370,8 @@ namespace VrPlayer.Projections.Hemisphere
                     for (int slice = 0; slice <= Slices; slice++)
                     {
                         var p = new Point((double)slice / Slices, (double)stack / Stacks);
-                        var u = XRight / 180.0 + 0.75 + fisheyeScaleHorizontal * (p.Y / 4) * Math.Cos(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollRight / 360);
-                        var v = YRight / 180.0 + 0.5 + fisheyeScaleVertical * (p.Y / 2) * Math.Sin(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollRight / 360);
+                        var u = XRight / 360.0 + 0.75 + fisheyeScaleHorizontal * (p.Y / 4) * Math.Cos(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollRight / 360);
+                        var v = YRight / 360.0 + 0.5 + fisheyeScaleVertical * (p.Y / 2) * Math.Sin(p.X * 2 * Math.PI - Math.PI / 2 - 2 * Math.PI * RollRight / 360);
                         textureCoordinates.Add(new Point(u, v));
                     }
                 }
