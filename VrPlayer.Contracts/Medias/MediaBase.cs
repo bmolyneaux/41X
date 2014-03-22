@@ -98,7 +98,14 @@ namespace VrPlayer.Contracts.Medias
         {
             get
             {
-                return (Position.TotalMilliseconds / Duration.TotalMilliseconds) * 100;
+                if (Duration.TotalMilliseconds > 0)
+                {
+                    return (Position.TotalMilliseconds / Duration.TotalMilliseconds) * 100;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
