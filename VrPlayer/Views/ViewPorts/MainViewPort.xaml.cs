@@ -39,7 +39,7 @@ namespace VrPlayer.Views.ViewPorts
             }
         }
 
-        private void Border_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _viewModel.ToggleNavigationCommand.Execute(null);
 
@@ -49,7 +49,7 @@ namespace VrPlayer.Views.ViewPorts
 
         private void Border_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            _viewModel.Gui.MouseXY = e.GetPosition(this);
+            _viewModel.Gui.MouseMove(e.GetPosition(this), ActualWidth, ActualHeight);
         }
 
         private void ExternalViewPortOnClosing(object sender, CancelEventArgs cancelEventArgs)

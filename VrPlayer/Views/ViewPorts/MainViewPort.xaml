@@ -248,7 +248,7 @@
         
         
     </UserControl.Resources>
-    <Border Background="Transparent" MouseDown="Border_MouseUp" MouseMove="Border_MouseMove">
+    <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

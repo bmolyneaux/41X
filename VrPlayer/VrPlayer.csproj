@@ -161,6 +161,8 @@
     <Compile Include="Views\ViewPorts\MainViewPort.xaml.cs">
       <DependentUpon>MainViewPort.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VrGui\VrButton.cs" />
+    <Compile Include="Views\VrGui\VrForm.cs" />
     <Compile Include="Views\VrGui\VrGui.cs" />
     <Page Include="Views\Dialogs\KeyInputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
