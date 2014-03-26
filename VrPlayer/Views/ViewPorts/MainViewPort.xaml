@@ -248,7 +248,7 @@
         
         
     </UserControl.Resources>
-    <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove">
+    <Border Background="Transparent" MouseDown="Border_MouseUp" MouseMove="Border_MouseMove">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -269,7 +269,7 @@
                 <Border Background="Black" ClipToBounds="True">
                     <ContentControl Content="{StaticResource view1}" />
                 </Border>
-                <Rectangle Fill="#BB000000" />
+                <Rectangle Fill="#BB000000" x:Name="UiMask1"/>
                 <Border ClipToBounds="True">
                     <ContentControl Content="{StaticResource view1UI}" />
                 </Border>
@@ -285,7 +285,7 @@
                 <Border Background="Black" ClipToBounds="True">
                     <ContentControl Content="{StaticResource view2}" />
                 </Border>
-                <Rectangle Fill="#BB000000" />
+                <Rectangle Fill="#BB000000" x:Name="UiMask2"/>
                 <Border ClipToBounds="True">
                     <ContentControl Content="{StaticResource view2UI}" />
                 </Border>

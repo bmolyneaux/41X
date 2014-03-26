@@ -26,7 +26,7 @@ namespace VrPlayer.Views.VrGui
 
         private static string BASE_DIR = "pack://application:,,,/Medias/VrGui/";
 
-
+        private bool _visible = true;
         private Point _mouseXY = new Point(0, 0);
         public Point MouseXY
         {
@@ -37,9 +37,21 @@ namespace VrPlayer.Views.VrGui
             set
             {
                 _mouseXY = value;
-
-                updateMaterial();
+                if (_visible)
+                {
+                    updateMaterial();
+                }
             }
+        }
+ 
+        public bool MouseUp()
+        {
+            _visible = !_visible;
+
+            if (_visible) updateMaterial();
+            else _material.Visual = null;
+
+            return _visible;
         }
 
         private void updateMaterial()

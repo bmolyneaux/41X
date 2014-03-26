@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using VrPlayer.Helpers;
 using VrPlayer.Models.State;
@@ -38,9 +39,12 @@ namespace VrPlayer.Views.ViewPorts
             }
         }
 
-        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _viewModel.ToggleNavigationCommand.Execute(null);
+
+            byte alpha = (_viewModel.Gui.MouseUp()) ? (byte)0xBB : (byte)0x00;
+            this.UiMask1.Fill = this.UiMask2.Fill = new SolidColorBrush(Color.FromArgb(alpha, 0x00, 0x00, 0x00));
         }
 
         private void Border_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
