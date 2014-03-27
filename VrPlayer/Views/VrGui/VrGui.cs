@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using VrPlayer.Contracts.Projections;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace VrPlayer.Views.VrGui
 {
@@ -21,10 +22,10 @@ namespace VrPlayer.Views.VrGui
         
         private bool _visible = true;
 
-        private VrForm _form;
+        //private VrForm _form;
 
-        Canvas m;
-        Canvas c;
+        Canvas mouse;
+        Panel panel;
 
         private const int CURSOR_WIDTH = 10;
         private const int CURSOR_HEIGHT = 10;
@@ -33,48 +34,50 @@ namespace VrPlayer.Views.VrGui
         {
             _material = new VisualBrush();
 
-            _form = new VrForm();
+            //_form = new VrForm();
+        }
 
-            c = new Canvas();
-            c.Children.Add(_form);
-
+        public void setVisual(Panel p)
+        {
+            panel = p;
+            
             // Mouse Canvas
-            m = new Canvas();
-            m.Width = 10;
-            m.Height = 10;
-            m.Background = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
-            Canvas.SetLeft(m, 50);
-            Canvas.SetTop(m, 50);
-            m.ClipToBounds = true;
+            mouse = new Canvas();
+            mouse.Width = 10;
+            mouse.Height = 10;
+            mouse.Background = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
+            Canvas.SetLeft(mouse, 50);
+            Canvas.SetTop(mouse, 50);
+            mouse.ClipToBounds = true;
 
-            c.Children.Add(m);
+            p.Children.Add(mouse);
 
-            _material.Visual = c;
+            _material.Visual = p;
         }
 
-        public void MouseMove(Point mouseXY, double width, double height)
+        public void MouseMove(Point actualXY, double viewportWidth, double viewportHeight)
         {
-            Point coords = adjustMouseCoords(mouseXY, width, height);
-            Canvas.SetLeft(m, coords.X);
-            Canvas.SetTop(m, coords.Y);
+            Point adjustedXY = adjustMouseCoords(actualXY, viewportWidth, viewportHeight);
+            Canvas.SetLeft(mouse, adjustedXY.X);
+            Canvas.SetTop(mouse, adjustedXY.Y);
         }
 
-        private Point adjustMouseCoords(Point mouseXY, double width, double height)
+        private Point adjustMouseCoords(Point actualXY, double viewportWidth, double viewportHeight)
         {
-            double x = mouseXY.X * VrForm.CANVAS_WIDTH / width;
-            double y = mouseXY.Y * VrForm.CANVAS_HEIGHT / height;
+            double x = actualXY.X * VrForm.CANVAS_WIDTH / viewportWidth;
+            double y = actualXY.Y * VrForm.CANVAS_HEIGHT / viewportHeight;
 
             x = Math.Min(VrForm.CANVAS_WIDTH - CURSOR_WIDTH, x);
             y = Math.Min(VrForm.CANVAS_HEIGHT - CURSOR_HEIGHT, y);
 
             return new Point(x, y);
-        }
+         }
  
         public bool MouseUp()
         {
             _visible = !_visible;
 
-            if (_visible) _material.Visual = c;
+            if (_visible) _material.Visual = panel;
             else _material.Visual = null;
 
             return _visible;

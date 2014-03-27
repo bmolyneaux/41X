@@ -13,14 +13,22 @@ namespace VrPlayer.Views.VrGui
 {
     class VrForm : UserControl
     {
-        public static double CANVAS_WIDTH = 640;          // GUI menu base panel width
-        public static double CANVAS_HEIGHT = 400;          // GUI menu base panel height
+        public static double CANVAS_WIDTH = 1280;          // GUI menu base panel width
+        public static double CANVAS_HEIGHT = 800;          // GUI menu base panel height
         private static double CELL_PADDING = 8;            // Pseudo-cell padding for the content grid\
 
         private static string BASE_DIR = "pack://application:,,,/Medias/VrGui/";
 
+        Button b;
+
         public VrForm() : base() {
             updateMaterial();
+        }
+
+        public void PublicOnMouseDown(MouseEventArgs e)
+        {
+            MouseButtonEventArgs mbe = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left);
+            OnMouseDown(mbe);
         }
 
         public void updateMaterial()
@@ -61,7 +69,16 @@ namespace VrPlayer.Views.VrGui
 
             c.Children.Add(mainPanel);
 
-            this.Content = c;
+            b = new Button();
+            b.Content = "Hello";
+            b.Click += new RoutedEventHandler(testClick);
+
+            this.Content = b;
+        }
+
+        void testClick(object sender, RoutedEventArgs e)
+        {
+            b.Content = "New Button (b2) Was Clicked!!";
         }
 
         /// <summary>

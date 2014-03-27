@@ -245,51 +245,66 @@
             </ModelVisual3D>
         </Viewport3D>
 
-        
-        
-    </UserControl.Resources>
-    <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
 
-            <!--ViewPort Left-->
-            <Grid Background="Black" ClipToBounds="True" x:Name="ViewPortLeft"
+
+    </UserControl.Resources>
+
+
+    <Border Background="Transparent" MouseDown="Border_MouseDown" MouseMove="Border_MouseMove">
+        <Grid Background="Black" ClipToBounds="True"
+                  Grid.Column="0" 
+                  Grid.ColumnSpan="1"  
+                  Grid.Row="0" 
+                  Grid.RowSpan="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--ViewPort Left-->
+                <Grid Background="Black" ClipToBounds="True" x:Name="ViewPortLeft"
                   Grid.Column="{Binding Path=Viewport1Col}" 
                   Grid.ColumnSpan="{Binding Path=Viewport1ColSpan}"  
                   Grid.Row="{Binding Path=Viewport1Row}" 
                   Grid.RowSpan="{Binding Path=Viewport1RowSpan}"
                   Effect="{Binding Path=State.DistortionPlugin.Content.Left}">
-                <Border Background="Black" ClipToBounds="True">
-                    <ContentControl Content="{StaticResource view1}" />
-                </Border>
-                <Rectangle Fill="#BB000000" x:Name="UiMask1"/>
-                <Border ClipToBounds="True">
-                    <ContentControl Content="{StaticResource view1UI}" />
-                </Border>
-                
-            </Grid>
-            <!--ViewPort Right-->
-            <Grid Background="Black" ClipToBounds="True" x:Name="ViewPortRight"
+                    <Border Background="Black" ClipToBounds="True">
+                        <ContentControl Content="{StaticResource view1}" />
+                    </Border>
+                    <Rectangle Fill="#BB000000" x:Name="UiMask1"/>
+                    <Border ClipToBounds="True">
+                        <ContentControl Content="{StaticResource view1UI}" />
+                    </Border>
+                </Grid>
+                <!--ViewPort Right-->
+                <Grid Background="Black" ClipToBounds="True" x:Name="ViewPortRight"
                   Grid.Column="{Binding Path=Viewport2Col}" 
                   Grid.ColumnSpan="{Binding Path=Viewport2ColSpan}" 
                   Grid.Row="{Binding Path=Viewport2Row}" 
                   Grid.RowSpan="{Binding Path=Viewport2RowSpan}"
                   Effect="{Binding Path=State.DistortionPlugin.Content.Right}">
-                <Border Background="Black" ClipToBounds="True">
-                    <ContentControl Content="{StaticResource view2}" />
-                </Border>
-                <Rectangle Fill="#BB000000" x:Name="UiMask2"/>
-                <Border ClipToBounds="True">
-                    <ContentControl Content="{StaticResource view2UI}" />
-                </Border>
+                    <Border Background="Black" ClipToBounds="True">
+                        <ContentControl Content="{StaticResource view2}" />
+                    </Border>
+                    <Rectangle Fill="#BB000000" x:Name="UiMask2"/>
+                    <Border ClipToBounds="True">
+                        <ContentControl Content="{StaticResource view2UI}" />
+                    </Border>
+                </Grid>
             </Grid>
+            <StackPanel Opacity="0.0" x:Name="container">
+                <Canvas x:Name="testPanel" Background="Aquamarine" HorizontalAlignment="Stretch" Height="800">
+                    <UniformGrid>
+                        <Button Content="Hello"/>
+                        <TextBox/>
+                    </UniformGrid>
+                </Canvas>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>
