@@ -133,9 +133,9 @@
 
 
         <GeometryModel3D x:Key="GeometryUI" Geometry="{Binding Path=Gui.Geometry}">
-            <GeometryModel3D.BackMaterial>
+            <GeometryModel3D.Material>
                 <DiffuseMaterial Brush="{Binding Path=Gui.Material}"></DiffuseMaterial>
-            </GeometryModel3D.BackMaterial>
+            </GeometryModel3D.Material>
         </GeometryModel3D>
 
         <Viewport3D x:Key="view1UI" IsHitTestVisible="False" RenderOptions.EdgeMode="Aliased" ClipToBounds="False">

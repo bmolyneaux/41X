@@ -56,9 +56,6 @@
     <ApplicationIcon>vrplayer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="3DTools">
-      <HintPath>..\Lib\3DTools\3DTools.dll</HintPath>
-    </Reference>
     <Reference Include="CsXmpToolkit">
       <HintPath>..\Lib\CsXmpToolkit\CsXmpToolkit.dll</HintPath>
     </Reference>
@@ -405,8 +402,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)Lib\CsXmpToolkit\*.dll" "$(TargetDir)" /y
-xcopy "$(SolutionDir)Lib\WPFMediaKit\EVRPresenter32.dll" "$(TargetDir)" /y
-xcopy "$(SolutionDir)Lib\3DTools\*.*" "$(TargetDir)" /y</PostBuildEvent>
+xcopy "$(SolutionDir)Lib\WPFMediaKit\EVRPresenter32.dll" "$(TargetDir)" /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

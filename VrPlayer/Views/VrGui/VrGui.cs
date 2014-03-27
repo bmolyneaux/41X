@@ -151,12 +151,12 @@ namespace VrPlayer.Views.VrGui
                 var triangleIndices = new Int32Collection();
 
                 //Left
-                triangleIndices.Add(0);
+                triangleIndices.Add(2);
                 triangleIndices.Add(1);
-                triangleIndices.Add(2);
-                triangleIndices.Add(2);
-                triangleIndices.Add(3);
                 triangleIndices.Add(0);
+                triangleIndices.Add(0);
+                triangleIndices.Add(3);
+                triangleIndices.Add(2);
 
                 return triangleIndices;
             }
