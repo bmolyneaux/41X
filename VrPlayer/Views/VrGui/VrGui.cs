@@ -6,11 +6,14 @@ using System.Windows.Media.Media3D;
 using VrPlayer.Contracts.Projections;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace VrPlayer.Views.VrGui
 {
     public class VrGui : DependencyObject
     {
+        private static string BASE_DIR = "pack://application:,,,/Medias/VrGui/";
+
         private double Width = 2;
         private double Height = 1.5;
         private double Depth = 1;
@@ -22,9 +25,9 @@ namespace VrPlayer.Views.VrGui
         
         private bool _visible = true;
 
-        //private VrForm _form;
+        private VrForm _form;
 
-        Canvas mouse;
+        static Canvas mouse;
         Panel panel;
 
         private const int CURSOR_WIDTH = 10;
@@ -34,25 +37,35 @@ namespace VrPlayer.Views.VrGui
         {
             _material = new VisualBrush();
 
-            //_form = new VrForm();
+            _form = new VrForm();
         }
 
         public void setVisual(Panel p)
         {
+
             panel = p;
             
             // Mouse Canvas
             mouse = new Canvas();
-            mouse.Width = 10;
-            mouse.Height = 10;
-            mouse.Background = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
+            mouse.Width = 32;
+            mouse.Height = 32;
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(BASE_DIR+"hand-icon.png"));
+            //mouse.Background = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
+            mouse.Background = ib;
             Canvas.SetLeft(mouse, 50);
             Canvas.SetTop(mouse, 50);
             mouse.ClipToBounds = true;
 
-            p.Children.Add(mouse);
+            panel.Children.Add(_form);
+            panel.Children.Add(mouse);
 
-            _material.Visual = p;
+            _material.Visual = panel;
+        }
+
+        public static void setMouseVisibility(Visibility visibility)
+        {
+            mouse.Visibility = visibility;
         }
 
         public void MouseMove(Point actualXY, double viewportWidth, double viewportHeight)
@@ -72,16 +85,6 @@ namespace VrPlayer.Views.VrGui
 
             return new Point(x, y);
          }
- 
-        public bool MouseUp()
-        {
-            _visible = !_visible;
-
-            if (_visible) _material.Visual = panel;
-            else _material.Visual = null;
-
-            return _visible;
-        }
 
         public static readonly DependencyProperty SlicesProperty =
             DependencyProperty.Register("Slices", typeof(int),

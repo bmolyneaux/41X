@@ -62,6 +62,10 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NReco.VideoConverter, Version=1.0.0.27281, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Medias\VrGui\NReco.VideoConverter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
@@ -88,6 +92,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Settings\ISettingsManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\IMediaService.cs" />
     <Compile Include="Services\MediaService.cs" />
     <Compile Include="Models\Config\ApplicationConfigBase.cs" />
@@ -164,6 +173,7 @@
     <Compile Include="Views\VrGui\VrButton.cs" />
     <Compile Include="Views\VrGui\VrForm.cs" />
     <Compile Include="Views\VrGui\VrGui.cs" />
+    <Compile Include="Views\VrGui\VrIcon.cs" />
     <Page Include="Views\Dialogs\KeyInputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -259,11 +269,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Views\VrGui\NReco.VideoConverter.dll" />
     <Resource Include="Medias\VrGui\image_icon.png" />
     <Resource Include="Medias\VrGui\live_icon.png" />
     <Resource Include="Medias\VrGui\next_icon.png" />
     <Resource Include="Medias\VrGui\prev_icon.png" />
     <Resource Include="Medias\VrGui\video_icon.png" />
+    <None Include="Resources\image_icon.png" />
+    <None Include="Resources\live_icon.png" />
+    <None Include="Resources\next_icon.png" />
+    <None Include="Resources\prev_icon.png" />
+    <None Include="Resources\video_icon.png" />
+    <Resource Include="Medias\VrGui\hand-icon.png" />
     <Content Include="Samples\2-CubeMono.jpg.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -399,6 +416,13 @@
       <Name>VrPlayer.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)Lib\CsXmpToolkit\*.dll" "$(TargetDir)" /y
