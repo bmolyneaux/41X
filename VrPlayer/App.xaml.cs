@@ -24,8 +24,8 @@ namespace VrPlayer
 
         private readonly IApplicationConfig _appConfig;
         private readonly ISettingsManager _settingsManager;
-        private readonly IPluginManager _pluginManager;
-        private readonly IApplicationState _appState;
+        public static IPluginManager _pluginManager;
+        public static IApplicationState _appState;
         private readonly IPresetsManager _presetsManager;
         private readonly IMediaService _mediaService;
 

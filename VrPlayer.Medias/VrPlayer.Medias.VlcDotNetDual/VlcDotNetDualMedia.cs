@@ -276,9 +276,9 @@ namespace VrPlayer.Medias.VlcDotNetDual
             {
                 ClearPlaylist();
 
-                _player.Media = new LocationMedia("rtsp://192.168.0.222:8000/test");
+                _player.Media = new LocationMedia("rtsp://192.168.10.2:8000/test");
 
-                _player2.Media = new LocationMedia("rtsp://192.168.0.222:9000/test");
+                _player2.Media = new LocationMedia("rtsp://192.168.10.2:9000/test");
 
                 _player.Play();
                 _player2.Play();

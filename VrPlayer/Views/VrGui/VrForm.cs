@@ -9,20 +9,44 @@ using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 
+
 namespace VrPlayer.Views.VrGui
 {
     class VrForm : UserControl
     {
-        public static double CANVAS_WIDTH = 1280;          // GUI menu base panel width
-        public static double CANVAS_HEIGHT = 800;          // GUI menu base panel height
-        private static double CELL_PADDING = 8;            // Pseudo-cell padding for the content grid\
+        public static double CANVAS_WIDTH   = 1280;          // GUI menu base panel width
+        public static double CANVAS_HEIGHT  = 800;          // GUI menu base panel height
+        private static double CELL_PADDING  = 8;            // Pseudo-cell padding for the content grid\
 
-        private static string BASE_DIR = "pack://application:,,,/Medias/VrGui/";
+        private static string BASE_DIR  = "pack://application:,,,/Medias/VrGui/";
+        private static string MOV_DIR   = "C:\\Users\\41X\\Videos\\";
 
-        Button b;
+        private bool _visible = true;
+        private Canvas c = new Canvas();
 
         public VrForm() : base() {
             updateMaterial();
+            this.MouseUp += VrForm_MouseUp;
+        }
+
+        void VrForm_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _visible = !_visible;
+            var mediaPlugin = App._appState.MediaPlugin.Content;
+
+            if (_visible)
+            {
+                mediaPlugin.PauseCommand.Execute(null);
+                VrGui.setMouseVisibility(Visibility.Visible);
+                updateMaterial();
+            }
+            else
+            {
+                c.Children.Clear();
+                c.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+                if (!mediaPlugin.IsPlaying) mediaPlugin.PlayCommand.Execute(null);
+                VrGui.setMouseVisibility(Visibility.Hidden);
+            }
         }
 
         public void PublicOnMouseDown(MouseEventArgs e)
@@ -34,11 +58,10 @@ namespace VrPlayer.Views.VrGui
         public void updateMaterial()
         {
             // Main canvas
-            Canvas c = new Canvas();
             c.VerticalAlignment = VerticalAlignment.Bottom;
             c.Width = CANVAS_WIDTH;
             c.Height = CANVAS_HEIGHT;
-            c.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+            c.Background = new SolidColorBrush(Color.FromArgb(0xBB, 0x00, 0x00, 0x00));
             c.ClipToBounds = true;
 
             // Main Stack Panel. Vertical stack
@@ -46,6 +69,11 @@ namespace VrPlayer.Views.VrGui
             mainPanel.Width = CANVAS_WIDTH;
             mainPanel.Height = CANVAS_HEIGHT;
             mainPanel.VerticalAlignment = VerticalAlignment.Bottom;
+
+            Rectangle spacer = new Rectangle();
+            spacer.Fill = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+            spacer.Height = CANVAS_HEIGHT / 10;
+            mainPanel.Children.Add(spacer);
 
             //Title block for the menu
             TextBlock title = new TextBlock();
@@ -57,28 +85,21 @@ namespace VrPlayer.Views.VrGui
             //title.Foreground = Brushes.Black;
             //title.Background = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
             title.Foreground = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
-
+            title.VerticalAlignment = VerticalAlignment.Bottom;
             mainPanel.Children.Add(title);
 
             // Grid Panel for the content selection and content navigation
             Grid content = createContentGrid(CANVAS_WIDTH, CANVAS_HEIGHT / 2);
+            content.VerticalAlignment = VerticalAlignment.Bottom;
             mainPanel.Children.Add(content);
 
             Grid progress = createProgressGrid(CANVAS_WIDTH / 1.5, CANVAS_HEIGHT / 4);
+            progress.VerticalAlignment = VerticalAlignment.Bottom;
             mainPanel.Children.Add(progress);
 
             c.Children.Add(mainPanel);
 
-            b = new Button();
-            b.Content = "Hello";
-            b.Click += new RoutedEventHandler(testClick);
-
-            this.Content = b;
-        }
-
-        void testClick(object sender, RoutedEventArgs e)
-        {
-            b.Content = "New Button (b2) Was Clicked!!";
+            this.Content = c;
         }
 
         /// <summary>
@@ -122,25 +143,64 @@ namespace VrPlayer.Views.VrGui
         /// <param name="height">Preferred Grid Panel height</param>
         private Grid createProgressGrid(double width, double height)
         {
+            var mediaPlugin = App._appState.MediaPlugin.Content;
+            double progPercent = mediaPlugin.Position.TotalSeconds / mediaPlugin.Duration.TotalSeconds;
+
             Grid progress = createGrid(width, height);
             progress.VerticalAlignment = VerticalAlignment.Bottom;
 
             Rectangle bar = new Rectangle();
-            bar.Fill = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
+            LinearGradientBrush vertGrad1 = new LinearGradientBrush();
+            vertGrad1.StartPoint = new Point(0.5, 0);
+            vertGrad1.EndPoint = new Point(0.5, 1);
+            vertGrad1.GradientStops.Add(new GradientStop(Color.FromRgb(0xBD, 0xBD, 0xBD), 0.0));
+            vertGrad1.GradientStops.Add(new GradientStop(Color.FromRgb(0xEC, 0xEC, 0xEC), 0.5));
+            //pbar.Fill = new SolidColorBrush(Color.FromRgb(0x66, 0xFF, 0x66));
+            bar.Fill = vertGrad1;
             bar.Height = (height / 4) - (CELL_PADDING * 2);
+            bar.Width = (width / 5) * 3;
             Grid.SetColumnSpan(bar, 3);
             Grid.SetColumn(bar, 1);
             Grid.SetRow(bar, 0);
             progress.Children.Add(bar);
 
+            if (mediaPlugin.HasDuration)
+            {
+                Rectangle pbar = new Rectangle();
+                pbar.HorizontalAlignment = HorizontalAlignment.Left;
+                LinearGradientBrush vertGrad2 = new LinearGradientBrush();
+                vertGrad2.StartPoint = new Point(0.5, 0);
+                vertGrad2.EndPoint = new Point(0.5, 1);
+                vertGrad2.GradientStops.Add(new GradientStop(Color.FromRgb(0x99, 0xFF, 0x99), 0.0));
+                vertGrad2.GradientStops.Add(new GradientStop(Color.FromRgb(0x66, 0xFF, 0x66), 0.5));
+                pbar.Fill =  vertGrad2;
+                pbar.Height = (height / 4) - (CELL_PADDING * 2);
+                pbar.Width = bar.Width * (mediaPlugin.Position.TotalSeconds / mediaPlugin.Duration.TotalSeconds);
+                Grid.SetColumnSpan(pbar, 3);
+                Grid.SetColumn(pbar, 1);
+                Grid.SetRow(pbar, 0);
+                progress.Children.Add(pbar);
+            }
+
+            mediaPlugin.Duration.ToString();
             //Title block for elapsed time on the video
             TextBlock elapsed = new TextBlock();
             FontSizeConverter fsc = new FontSizeConverter();
             elapsed.FontSize = (double)fsc.ConvertFrom("20pt");
             elapsed.TextAlignment = TextAlignment.Center;
-            elapsed.Text = "-:--";
             elapsed.Margin = new Thickness(2);
             elapsed.Foreground = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
+
+            if (mediaPlugin.HasDuration)
+            {
+                elapsed.Text = string.Format("{0:00}:{1:00}:{2:00}",
+                    mediaPlugin.Position.Hours, mediaPlugin.Position.Minutes, mediaPlugin.Position.Seconds);
+            }
+            else
+            {
+                elapsed.Text = "-:--";
+            }
+
             Grid.SetColumn(elapsed, 0);
             Grid.SetRow(elapsed, 0);
             progress.Children.Add(elapsed);
@@ -149,9 +209,20 @@ namespace VrPlayer.Views.VrGui
             TextBlock length = new TextBlock();
             length.FontSize = (double)fsc.ConvertFrom("20pt");
             length.TextAlignment = TextAlignment.Center;
-            length.Text = "-:--";
             length.Margin = new Thickness(2);
             length.Foreground = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
+
+            if (mediaPlugin.HasDuration)
+            {
+                length.Text = string.Format("{0:00}:{1:00}:{2:00}", 
+                    mediaPlugin.Duration.Hours, mediaPlugin.Duration.Minutes, mediaPlugin.Duration.Seconds);
+                //length.Text = mediaPlugin.Duration.Minutes.ToString() + ":" + mediaPlugin.Duration.Seconds.ToString();
+            }
+            else
+            {
+                length.Text = "-:--";
+            }
+
             Grid.SetColumn(length, 4);
             Grid.SetRow(length, 0);
             progress.Children.Add(length);
@@ -169,69 +240,73 @@ namespace VrPlayer.Views.VrGui
 
             // Get all the icons for the content
             // TODO: Differentiate between a video and a photo for the proper icon. Just using video for now
-            Image icon1 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
-            icon1.Width = (CANVAS_WIDTH / 5) - CELL_PADDING;
+            VrIcon icon1 = new VrIcon(MOV_DIR + "Hockey_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
             Grid.SetColumn(icon1, 1);
             Grid.SetRow(icon1, 0);
             content.Children.Add(icon1);
-            // TODO: This will require some sort of "isLive" logic
-            //if (isLive(null)) addLiveBadge(content, 0, 3);
 
-            Image icon2 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
+            Image thumb1 = icon1.getVideoThumbnail( "Hockey.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
+            Grid.SetColumn(thumb1, 1);
+            Grid.SetRow(thumb1, 0);
+            content.Children.Add(thumb1);
+
+            VrIcon icon2 = new VrIcon(MOV_DIR + "Lecture_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
             Grid.SetColumn(icon2, 2);
             Grid.SetRow(icon2, 0);
             content.Children.Add(icon2);
-            // TODO: This will require some sort of "isLive" logic
-            //if (isLive(null)) addLiveBadge(content, 0, 3);
 
-            Image icon3 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
+            Image thumb2 = icon2.getVideoThumbnail("Lecture.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
+            Grid.SetColumn(thumb2, 2);
+            Grid.SetRow(thumb2, 0);
+            content.Children.Add(thumb2);
+
+            VrIcon icon3 = new VrIcon("rtsp://192.168.10.2:8000/test", CANVAS_WIDTH / 5 - CELL_PADDING, true);
             Grid.SetColumn(icon3, 3);
             Grid.SetRow(icon3, 0);
             content.Children.Add(icon3);
-            // TODO: This will require some sort of "isLive" logic
-            if (isLive(null)) addLiveBadge(content, 0, 3);
+            addLiveBadge(content, 0, 3);
 
-            Image icon4 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
-            Grid.SetColumn(icon4, 1);
-            Grid.SetRow(icon4, 1);
-            content.Children.Add(icon4);
-            // TODO: This will require some sort of "isLive" logic
-            //if (isLive(null)) addLiveBadge(content, 0, 3);
+            //Image icon4 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
+            //Grid.SetColumn(icon4, 1);
+            //Grid.SetRow(icon4, 1);
+            //content.Children.Add(icon4);
+            //// TODO: This will require some sort of "isLive" logic
+            ////if (isLive(null)) addLiveBadge(content, 0, 3);
 
-            Image icon5 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
-            Grid.SetColumn(icon5, 2);
-            Grid.SetRow(icon5, 1);
-            content.Children.Add(icon5);
-            // TODO: This will require some sort of "isLive" logic
-            addLiveBadge(content, 1, 2);
+            //Image icon5 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
+            //Grid.SetColumn(icon5, 2);
+            //Grid.SetRow(icon5, 1);
+            //content.Children.Add(icon5);
+            //// TODO: This will require some sort of "isLive" logic
+            //addLiveBadge(content, 1, 2);
 
-            Image icon6 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
-            Grid.SetColumn(icon6, 3);
-            Grid.SetRow(icon6, 1);
-            content.Children.Add(icon6);
+            //Image icon6 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
+            //Grid.SetColumn(icon6, 3);
+            //Grid.SetRow(icon6, 1);
+            //content.Children.Add(icon6);
             // TODO: This will require some sort of "isLive" logic
             //if (isLive(null)) addLiveBadge(content, 0, 3);
 
             // These will be the navigation buttons for the content grid
-            Image prevIcon = createImageIcon("prev_icon.png", CANVAS_WIDTH / 10 - CELL_PADDING);
-            Grid.SetColumn(prevIcon, 0);
-            Grid.SetRowSpan(prevIcon, 2);
-            content.Children.Add(prevIcon);
+            //Image prevIcon = createImageIcon("prev_icon.png", CANVAS_WIDTH / 10 - CELL_PADDING);
+            //Grid.SetColumn(prevIcon, 0);
+            //Grid.SetRowSpan(prevIcon, 2);
+            //content.Children.Add(prevIcon);
 
-            Image nextIcon = createImageIcon("next_icon.png", CANVAS_WIDTH / 10 - CELL_PADDING);
-            Grid.SetColumn(nextIcon, 5);
-            Grid.SetRowSpan(nextIcon, 2);
-            content.Children.Add(nextIcon);
+            //Image nextIcon = createImageIcon("next_icon.png", CANVAS_WIDTH / 10 - CELL_PADDING);
+            //Grid.SetColumn(nextIcon, 5);
+            //Grid.SetRowSpan(nextIcon, 2);
+            //content.Children.Add(nextIcon);
 
             return content;
         }
 
         private void addLiveBadge(Grid content, int row, int col)
         {
-            Image liveBadge = createImageIcon("live_icon.png", 25);
+            Image liveBadge = createImageIcon("live_icon.png", 50);
             liveBadge.HorizontalAlignment = HorizontalAlignment.Left;
             liveBadge.VerticalAlignment = VerticalAlignment.Top;
-            liveBadge.Margin = new Thickness(10, 30, 0, 0);
+            liveBadge.Margin = new Thickness(20, 50, 0, 0);
 
             Grid.SetRow(liveBadge, row);
             Grid.SetColumn(liveBadge, col);
