@@ -19,9 +19,38 @@
                 </StackPanel>
             </VisualBrush.Visual>
         </VisualBrush>
+        <VisualBrush x:Key="MediaDebug"
+                     RenderOptions.CachingHint="Cache"
+                     RenderOptions.CacheInvalidationThresholdMaximum="2.0"
+                     RenderOptions.CacheInvalidationThresholdMinimum="0.5"
+                     ViewportUnits="Absolute">
+            <VisualBrush.Visual>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Width="959" Height="539" Grid.Column="0" Grid.Row="0"/>
+                    <Rectangle Width="2" Height="539" Grid.Column="1" Grid.Row="0" Fill="#FFFFFF00"/>
+                    <Rectangle Width="959" Height="539" Grid.Column="2" Grid.Row="0"/>
+                    <Rectangle Width="959" Height="2" Grid.Column="0" Grid.Row="1" Fill="#FF00FFFF"/>
+                    <Rectangle Width="2" Height="2" Grid.Column="1" Grid.Row="1" Fill="#FF00FFFF"/>
+                    <Rectangle Width="959" Height="2" Grid.Column="2" Grid.Row="1" Fill="#FF00FFFF"/>
+                    <Rectangle Width="959" Height="539" Grid.Column="0" Grid.Row="2"/>
+                    <Rectangle Width="2" Height="539" Grid.Column="1" Grid.Row="2" Fill="#FFFF00FF"/>
+                    <Rectangle Width="959" Height="539" Grid.Column="2" Grid.Row="2"/>
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
         <GeometryModel3D x:Key="Geometry" Geometry="{Binding Path=State.ProjectionPlugin.Content.Geometry}">
             <GeometryModel3D.BackMaterial>
                 <DiffuseMaterial Brush="{DynamicResource Media}"></DiffuseMaterial>
+            </GeometryModel3D.BackMaterial>
+        </GeometryModel3D>
+        <GeometryModel3D x:Key="GeometryDebug" Geometry="{Binding Path=State.ProjectionPlugin.Content.GeometryDebug}">
+            <GeometryModel3D.BackMaterial>
+                <DiffuseMaterial Brush="{DynamicResource MediaDebug}"></DiffuseMaterial>
             </GeometryModel3D.BackMaterial>
         </GeometryModel3D>
 
@@ -76,6 +105,22 @@
                     </Transform3DGroup>
                 </ModelVisual3D.Transform>
             </ModelVisual3D>
+            <!--<ModelVisual3D Content="{DynamicResource GeometryDebug}">
+                <ModelVisual3D.Transform>
+                    <Transform3DGroup>
+                        <TranslateTransform3D
+                                    OffsetX="{Binding Path=State.TrackerPlugin.Content.Position.X}"
+                                    OffsetY="{Binding Path=State.TrackerPlugin.Content.Position.Y}"
+                                    OffsetZ="{Binding Path=State.TrackerPlugin.Content.Position.Z}">
+                        </TranslateTransform3D>
+                        <TranslateTransform3D
+                                    OffsetX="{Binding Path=State.StabilizerPlugin.Content.Translation.X}"
+                                    OffsetY="{Binding Path=State.StabilizerPlugin.Content.Translation.Y}"
+                                    OffsetZ="{Binding Path=State.StabilizerPlugin.Content.Translation.Z}">
+                        </TranslateTransform3D>
+                    </Transform3DGroup>
+                </ModelVisual3D.Transform>
+            </ModelVisual3D>-->
         </Viewport3D>
 
         <Viewport3D x:Key="view2" IsHitTestVisible="False" RenderOptions.EdgeMode="Aliased" ClipToBounds="False">
@@ -129,6 +174,22 @@
                     </Transform3DGroup>
                 </ModelVisual3D.Transform>
             </ModelVisual3D>
+            <!--<ModelVisual3D Content="{DynamicResource GeometryDebug}">
+                <ModelVisual3D.Transform>
+                    <Transform3DGroup>
+                        <TranslateTransform3D
+                                    OffsetX="{Binding Path=State.TrackerPlugin.Content.Position.X}"
+                                    OffsetY="{Binding Path=State.TrackerPlugin.Content.Position.Y}"
+                                    OffsetZ="{Binding Path=State.TrackerPlugin.Content.Position.Z}">
+                        </TranslateTransform3D>
+                        <TranslateTransform3D
+                                    OffsetX="{Binding Path=State.StabilizerPlugin.Content.Translation.X}"
+                                    OffsetY="{Binding Path=State.StabilizerPlugin.Content.Translation.Y}"
+                                    OffsetZ="{Binding Path=State.StabilizerPlugin.Content.Translation.Z}">
+                        </TranslateTransform3D>
+                    </Transform3DGroup>
+                </ModelVisual3D.Transform>
+            </ModelVisual3D>-->
         </Viewport3D>
 
 

@@ -60,6 +60,18 @@ namespace VrPlayer.Contracts.Projections
             }
         }
 
+        public virtual MeshGeometry3D GeometryDebug
+        {
+            get
+            {
+                var geometry = new MeshGeometry3D();
+                geometry.Positions = Positions;
+                geometry.TriangleIndices = TriangleIndices;
+                geometry.TextureCoordinates = MonoTextureCoordinates;
+                return geometry;
+            }
+        }
+
         public Vector3D CameraLeftPosition
         {
             get { return _cameraLeftPosition; }
