@@ -92,11 +92,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Settings\ISettingsManager.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\IMediaService.cs" />
     <Compile Include="Services\MediaService.cs" />
     <Compile Include="Models\Config\ApplicationConfigBase.cs" />
@@ -415,12 +410,6 @@
       <Project>{D4A54A70-3BB5-4BE5-BEDB-3A41B6C43033}</Project>
       <Name>VrPlayer.Helpers</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

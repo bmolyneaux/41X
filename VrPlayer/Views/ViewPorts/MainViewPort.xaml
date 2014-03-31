@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:VrPlayer.Helpers.Converters;assembly=VrPlayer.Helpers"
-             xmlns:resx="clr-namespace:VrPlayer.Properties"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:ThicknessMultiConverter x:Key="ThicknessMulti" />
