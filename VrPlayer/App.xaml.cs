@@ -22,11 +22,32 @@ namespace VrPlayer
         private const string DefaultMedia = @"Samples\1-Grid.jpg";
         private const string UriScheme = @"vrplayer:";
 
-        private readonly IApplicationConfig _appConfig;
+        private static IApplicationConfig _appConfig;
+        public static IApplicationConfig AppConfig
+        {
+            get { return _appConfig; }
+        }
+
         private readonly ISettingsManager _settingsManager;
-        public static IPluginManager _pluginManager;
-        public static IApplicationState _appState;
-        private readonly IPresetsManager _presetsManager;
+        
+        private static IPluginManager _pluginManager;
+        public static IPluginManager PluginManager
+        {
+            get { return _pluginManager; }
+        }
+
+        private static IApplicationState _appState;
+        public static IApplicationState AppState
+        {
+            get { return _appState; }
+        }
+
+        private static IPresetsManager _presetsManager;
+        public static IPresetsManager PresetManager
+        {
+            get { return _presetsManager; }
+        }
+
         private readonly IMediaService _mediaService;
 
         public ViewModelFactory ViewModelFactory { get; private set; }

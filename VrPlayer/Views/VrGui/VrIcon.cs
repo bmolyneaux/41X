@@ -9,6 +9,7 @@ using VrPlayer.Contracts.Medias;
 using VrPlayer.ViewModels;
 using VrPlayer.Services;
 using VrPlayer.Models.Plugins;
+using VrPlayer.Helpers;
 using NReco;
 using System.Linq;
 
@@ -19,7 +20,8 @@ public class VrIcon : Image
     private String _uri;
     private bool _isLive;
     private static string BASE_DIR = "pack://application:,,,/Medias/VrGui/";
-    private static string MOV_DIR = "C:\\Users\\41X\\Videos\\";
+    //private static string MOV_DIR = "C:\\Users\\41X\\Videos\\";
+    private static string MOV_DIR = "C:\\Users\\41X\\Desktop\\Google Drive\\41X\\Videos\\";
 
     public VrIcon(String uri, double width, bool isLive) : base()
 	{
@@ -32,21 +34,35 @@ public class VrIcon : Image
 
     void MouseUpHandler(object sender, MouseButtonEventArgs e)
     {
-        IPlugin<IMedia> mediaPlugin = App._pluginManager.Medias
+        IPlugin<IMedia> mediaPlugin = App.PluginManager.Medias
                 .Where(m => m.GetType().FullName.Contains("VrPlayer.Medias.VlcDotNetDual.VlcDotNetDualPlugin"))
-                .DefaultIfEmpty(App._pluginManager.Medias.FirstOrDefault())
+                .DefaultIfEmpty(App.PluginManager.Medias.FirstOrDefault())
                 .First();
 
-        App._appState.MediaPlugin = mediaPlugin;
+        App.AppState.MediaPlugin = mediaPlugin;
         if (_isLive)
         {
             // open stream at uri
-            App._appState.MediaPlugin.Content.OpenStreamCommand.Execute(_uri);
+            App.AppState.MediaPlugin.Content.OpenStreamCommand.Execute(_uri);
         }
         else
         {
             // open file at uri
-            App._appState.MediaPlugin.Content.OpenFileCommand.Execute(_uri);
+            App.AppState.MediaPlugin.Content.OpenFileCommand.Execute(_uri);
+
+            if (!App.AppConfig.ReadSideCarPresets)
+                return;
+
+            try
+            {
+                var presetFile = _uri + ".json";
+                if (File.Exists(presetFile))
+                    App.PresetManager.LoadFromUri(presetFile);
+            }
+            catch (Exception exc)
+            {
+                Logger.Instance.Error("Error while loading preset file.'", exc);
+            }
         }
     }
 

@@ -7,6 +7,7 @@ using VrPlayer.Contracts.Projections;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace VrPlayer.Views.VrGui
 {
@@ -47,8 +48,8 @@ namespace VrPlayer.Views.VrGui
             
             // Mouse Canvas
             mouse = new Canvas();
-            mouse.Width = 32;
-            mouse.Height = 32;
+            mouse.Width = 48;
+            mouse.Height = 48;
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = new BitmapImage(new Uri(BASE_DIR+"hand-icon.png"));
             //mouse.Background = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
@@ -61,6 +62,12 @@ namespace VrPlayer.Views.VrGui
             panel.Children.Add(mouse);
 
             _material.Visual = panel;
+        }
+
+        public void setUiMasks(Rectangle mask1, Rectangle mask2)
+        {
+            _form.UiMask1 = mask1;
+            _form.UiMask2 = mask2;
         }
 
         public static void setMouseVisibility(Visibility visibility)

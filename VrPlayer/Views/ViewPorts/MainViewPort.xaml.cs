@@ -34,6 +34,7 @@ namespace VrPlayer.Views.ViewPorts
                 Cursor = System.Windows.Input.Cursors.None;
 
                 _viewModel.Gui.setVisual(testPanel);
+                _viewModel.Gui.setUiMasks(UiMask1, UiMask2);
             }
             catch (Exception exc)
             {

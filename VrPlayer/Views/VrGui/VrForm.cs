@@ -19,10 +19,23 @@ namespace VrPlayer.Views.VrGui
         private static double CELL_PADDING  = 8;            // Pseudo-cell padding for the content grid\
 
         private static string BASE_DIR  = "pack://application:,,,/Medias/VrGui/";
-        private static string MOV_DIR   = "C:\\Users\\41X\\Videos\\";
+        //private static string MOV_DIR   = "C:\\Users\\41X\\Videos\\";
+        private static string MOV_DIR   = "C:\\Users\\41X\\Desktop\\Google Drive\\41X\\Videos\\";
 
         private bool _visible = true;
         private Canvas c = new Canvas();
+        private Rectangle _uiMask1;
+        private Rectangle _uiMask2;
+        public Rectangle UiMask1
+        {
+            get { return _uiMask1; }
+            set { _uiMask1 = value; }
+        }
+        public Rectangle UiMask2
+        {
+            get { return _uiMask2; }
+            set { _uiMask2 = value; }
+        }
 
         public VrForm() : base() {
             updateMaterial();
@@ -32,18 +45,22 @@ namespace VrPlayer.Views.VrGui
         void VrForm_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _visible = !_visible;
-            var mediaPlugin = App._appState.MediaPlugin.Content;
+            var mediaPlugin = App.AppState.MediaPlugin.Content;
 
             if (_visible)
             {
                 mediaPlugin.PauseCommand.Execute(null);
+                _uiMask1.Visibility = Visibility.Visible;
+                _uiMask2.Visibility = Visibility.Visible;
                 VrGui.setMouseVisibility(Visibility.Visible);
                 updateMaterial();
             }
             else
             {
                 c.Children.Clear();
-                c.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+                //c.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+                _uiMask1.Visibility = Visibility.Hidden;
+                _uiMask2.Visibility = Visibility.Hidden;
                 if (!mediaPlugin.IsPlaying) mediaPlugin.PlayCommand.Execute(null);
                 VrGui.setMouseVisibility(Visibility.Hidden);
             }
@@ -61,7 +78,7 @@ namespace VrPlayer.Views.VrGui
             c.VerticalAlignment = VerticalAlignment.Bottom;
             c.Width = CANVAS_WIDTH;
             c.Height = CANVAS_HEIGHT;
-            c.Background = new SolidColorBrush(Color.FromArgb(0xBB, 0x00, 0x00, 0x00));
+            c.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x00, 0x00, 0x00));
             c.ClipToBounds = true;
 
             // Main Stack Panel. Vertical stack
@@ -78,7 +95,7 @@ namespace VrPlayer.Views.VrGui
             //Title block for the menu
             TextBlock title = new TextBlock();
             FontSizeConverter fsc = new FontSizeConverter();
-            title.FontSize = (double)fsc.ConvertFrom("22pt");
+            title.FontSize = (double)fsc.ConvertFrom("40pt");
             title.TextAlignment = TextAlignment.Center;
             title.Text = "MAIN MENU";
             title.Margin = new Thickness(2);
@@ -106,7 +123,7 @@ namespace VrPlayer.Views.VrGui
         /// Creates a 2x5 grid layout</summary>
         /// <param name="width">Preferred Grid Panel width</param>
         /// <param name="height">Preferred Grid Panel height</param>
-        private Grid createGrid(double width, double height)
+        private Grid createGrid2x5(double width, double height)
         {
             Grid grid = new Grid();
             grid.Width = width;
@@ -138,15 +155,48 @@ namespace VrPlayer.Views.VrGui
         }
 
         /// <summary>
+        /// Creates a 2x4 grid layout</summary>
+        /// <param name="width">Preferred Grid Panel width</param>
+        /// <param name="height">Preferred Grid Panel height</param>
+        private Grid createGrid2x4(double width, double height)
+        {
+            Grid grid = new Grid();
+            grid.Width = width;
+            grid.Height = height;
+            grid.HorizontalAlignment = HorizontalAlignment.Center;
+            grid.VerticalAlignment = VerticalAlignment.Center;
+            grid.ShowGridLines = false;
+
+            // Define the columns and rows for the content selection.
+            // This GUI is using 2 rows and 5 columns ( 3 for content and 2 for navigation)
+            ColumnDefinition colDef1 = new ColumnDefinition();
+            ColumnDefinition colDef2 = new ColumnDefinition();
+            ColumnDefinition colDef3 = new ColumnDefinition();
+            ColumnDefinition colDef4 = new ColumnDefinition();
+            grid.ColumnDefinitions.Add(colDef1);
+            grid.ColumnDefinitions.Add(colDef2);
+            grid.ColumnDefinitions.Add(colDef3);
+            grid.ColumnDefinitions.Add(colDef4);
+
+            RowDefinition rowDef1 = new RowDefinition();
+            RowDefinition rowDef2 = new RowDefinition();
+            grid.RowDefinitions.Add(rowDef1);
+            grid.RowDefinitions.Add(rowDef2);
+
+            return grid;
+
+        }
+
+        /// <summary>
         /// Creates a 2x5 grid layout to display the progress bar</summary>
         /// <param name="width">Preferred Grid Panel width</param>
         /// <param name="height">Preferred Grid Panel height</param>
         private Grid createProgressGrid(double width, double height)
         {
-            var mediaPlugin = App._appState.MediaPlugin.Content;
+            var mediaPlugin = App.AppState.MediaPlugin.Content;
             double progPercent = mediaPlugin.Position.TotalSeconds / mediaPlugin.Duration.TotalSeconds;
 
-            Grid progress = createGrid(width, height);
+            Grid progress = createGrid2x5(width, height);
             progress.VerticalAlignment = VerticalAlignment.Bottom;
 
             Rectangle bar = new Rectangle();
@@ -186,15 +236,17 @@ namespace VrPlayer.Views.VrGui
             //Title block for elapsed time on the video
             TextBlock elapsed = new TextBlock();
             FontSizeConverter fsc = new FontSizeConverter();
-            elapsed.FontSize = (double)fsc.ConvertFrom("20pt");
+            elapsed.FontSize = (double)fsc.ConvertFrom("30pt");
             elapsed.TextAlignment = TextAlignment.Center;
             elapsed.Margin = new Thickness(2);
             elapsed.Foreground = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
 
             if (mediaPlugin.HasDuration)
             {
-                elapsed.Text = string.Format("{0:00}:{1:00}:{2:00}",
-                    mediaPlugin.Position.Hours, mediaPlugin.Position.Minutes, mediaPlugin.Position.Seconds);
+                //elapsed.Text = string.Format("{0:00}:{1:00}:{2:00}",
+                //    mediaPlugin.Position.Hours, mediaPlugin.Position.Minutes, mediaPlugin.Position.Seconds);
+                elapsed.Text = string.Format("{0:00}:{1:00}",
+                     mediaPlugin.Position.Minutes, mediaPlugin.Position.Seconds);
             }
             else
             {
@@ -207,16 +259,17 @@ namespace VrPlayer.Views.VrGui
 
             //Title block for the full length of the video
             TextBlock length = new TextBlock();
-            length.FontSize = (double)fsc.ConvertFrom("20pt");
+            length.FontSize = (double)fsc.ConvertFrom("30pt");
             length.TextAlignment = TextAlignment.Center;
             length.Margin = new Thickness(2);
             length.Foreground = new SolidColorBrush(Color.FromRgb(0xEC, 0xEC, 0xEC));
 
             if (mediaPlugin.HasDuration)
             {
-                length.Text = string.Format("{0:00}:{1:00}:{2:00}", 
-                    mediaPlugin.Duration.Hours, mediaPlugin.Duration.Minutes, mediaPlugin.Duration.Seconds);
-                //length.Text = mediaPlugin.Duration.Minutes.ToString() + ":" + mediaPlugin.Duration.Seconds.ToString();
+                //length.Text = string.Format("{0:00}:{1:00}:{2:00}", 
+                //    mediaPlugin.Duration.Hours, mediaPlugin.Duration.Minutes, mediaPlugin.Duration.Seconds);
+                length.Text = string.Format("{0:00}:{1:00}",
+                    mediaPlugin.Duration.Minutes, mediaPlugin.Duration.Seconds);
             }
             else
             {
@@ -236,7 +289,7 @@ namespace VrPlayer.Views.VrGui
         /// <param name="height">Preferred Grid Panel height</param>
         private Grid createContentGrid(double width, double height)
         {
-            Grid content = createGrid(width, height);
+            Grid content = createGrid2x4(width, height);
 
             // Get all the icons for the content
             // TODO: Differentiate between a video and a photo for the proper icon. Just using video for now
@@ -245,7 +298,7 @@ namespace VrPlayer.Views.VrGui
             Grid.SetRow(icon1, 0);
             content.Children.Add(icon1);
 
-            Image thumb1 = icon1.getVideoThumbnail( "Hockey.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
+            Image thumb1 = icon1.getVideoThumbnail("Hockey.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
             Grid.SetColumn(thumb1, 1);
             Grid.SetRow(thumb1, 0);
             content.Children.Add(thumb1);
@@ -261,17 +314,20 @@ namespace VrPlayer.Views.VrGui
             content.Children.Add(thumb2);
 
             VrIcon icon3 = new VrIcon("rtsp://192.168.10.2:8000/test", CANVAS_WIDTH / 5 - CELL_PADDING, true);
-            Grid.SetColumn(icon3, 3);
-            Grid.SetRow(icon3, 0);
+            Grid.SetColumn(icon3, 1);
+            Grid.SetRow(icon3, 1);
             content.Children.Add(icon3);
-            addLiveBadge(content, 0, 3);
+            addLiveBadge(content, 1, 1);
 
-            //Image icon4 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
-            //Grid.SetColumn(icon4, 1);
-            //Grid.SetRow(icon4, 1);
-            //content.Children.Add(icon4);
-            //// TODO: This will require some sort of "isLive" logic
-            ////if (isLive(null)) addLiveBadge(content, 0, 3);
+            VrIcon icon4 = new VrIcon(MOV_DIR + "Music_1_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
+            Grid.SetColumn(icon4, 2);
+            Grid.SetRow(icon4, 1);
+            content.Children.Add(icon4);
+
+            Image thumb4 = icon4.getVideoThumbnail("Music_1.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
+            Grid.SetColumn(thumb4, 2);
+            Grid.SetRow(thumb4, 1);
+            content.Children.Add(thumb4);
 
             //Image icon5 = createImageIcon("video_icon.png", CANVAS_WIDTH / 5 - CELL_PADDING);
             //Grid.SetColumn(icon5, 2);
@@ -306,7 +362,7 @@ namespace VrPlayer.Views.VrGui
             Image liveBadge = createImageIcon("live_icon.png", 50);
             liveBadge.HorizontalAlignment = HorizontalAlignment.Left;
             liveBadge.VerticalAlignment = VerticalAlignment.Top;
-            liveBadge.Margin = new Thickness(20, 50, 0, 0);
+            liveBadge.Margin = new Thickness(50, 50, 0, 0);
 
             Grid.SetRow(liveBadge, row);
             Grid.SetColumn(liveBadge, col);
