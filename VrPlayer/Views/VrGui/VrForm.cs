@@ -293,7 +293,7 @@ namespace VrPlayer.Views.VrGui
 
             // Get all the icons for the content
             // TODO: Differentiate between a video and a photo for the proper icon. Just using video for now
-            VrIcon icon1 = new VrIcon(MOV_DIR + "Hockey_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
+            VrIcon icon1 = new VrIcon(MOV_DIR + "Hockey_Left.avi", CANVAS_WIDTH / 5 - CELL_PADDING, false);
             Grid.SetColumn(icon1, 1);
             Grid.SetRow(icon1, 0);
             content.Children.Add(icon1);
@@ -303,7 +303,7 @@ namespace VrPlayer.Views.VrGui
             Grid.SetRow(thumb1, 0);
             content.Children.Add(thumb1);
 
-            VrIcon icon2 = new VrIcon(MOV_DIR + "Lecture_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
+            VrIcon icon2 = new VrIcon(MOV_DIR + "Lecture_Left.avi", CANVAS_WIDTH / 5 - CELL_PADDING, false);
             Grid.SetColumn(icon2, 2);
             Grid.SetRow(icon2, 0);
             content.Children.Add(icon2);
@@ -319,12 +319,12 @@ namespace VrPlayer.Views.VrGui
             content.Children.Add(icon3);
             addLiveBadge(content, 1, 1);
 
-            VrIcon icon4 = new VrIcon(MOV_DIR + "Music_1_Left.mov", CANVAS_WIDTH / 5 - CELL_PADDING, false);
+            VrIcon icon4 = new VrIcon(MOV_DIR + "Music_3_Left.avi", CANVAS_WIDTH / 5 - CELL_PADDING, false);
             Grid.SetColumn(icon4, 2);
             Grid.SetRow(icon4, 1);
             content.Children.Add(icon4);
 
-            Image thumb4 = icon4.getVideoThumbnail("Music_1.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
+            Image thumb4 = icon4.getVideoThumbnail("Music_3.jpeg", CANVAS_HEIGHT / 10, (CANVAS_WIDTH / 5) - 20);
             Grid.SetColumn(thumb4, 2);
             Grid.SetRow(thumb4, 1);
             content.Children.Add(thumb4);
